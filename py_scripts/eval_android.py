@@ -29,7 +29,7 @@ from tqdm import tqdm
 from correction_network.networks import Net_Snapshot
 
 weight_dict = {
-    '15': "android_transformer_1000ep_2021-08-25_16-53-59",
+    '15': "android_name1_2025-07-03_17-08-39",
     '30': "android_transformer_1000ep_pos30_2021-08-28_11-23-06",
 }
 
@@ -53,7 +53,7 @@ dataset = Android_GNSS_Dataset(config)
 
 net = Net_Snapshot(dataset[0]['features'].size()[1], 1, len(dataset[0]['true_correction']))
 net.load_state_dict(torch.load(os.path.join(data_directory, 'weights', weight_dict[str(key_wt)])))
-net.cuda()
+# net.cuda()
 
 # Create empty dicts and lists
 ls_rand = {}
@@ -75,7 +75,7 @@ for b_t_sel in range(len(val_idx_list)-1):
     b_t_idx = val_idx_list[b_t_sel]
     b_key, t_idx = dataset.indices[b_t_idx]
     key_file, times = dataset.get_files(b_key)
-    f1, f2 = dataset.meas_file_paths[b_key].split("/")[-3:-1]
+    f1, f2 = dataset.meas_file_paths[b_key].replace("\\", "/").split("/")[-3:-1]
     dirname = os.path.join(config["root"], config["baselines"], f1, "output", f2)
     all_data = key_file[key_file['millisSinceGpsEpoch']==times[t_idx]]
     _gt_data = all_data.iloc[0]
@@ -96,7 +96,7 @@ for b_t_sel in range(len(val_idx_list)-1):
         times = (times/1000).astype(np.int32)
         if not b_key == key[0]:
             break
-        f1, f2 = dataset.meas_file_paths[key].split("/")[-3:-1]
+        f1, f2 = dataset.meas_file_paths[key].replace("\\", "/").split("/")[-3:-1]
         dirname = os.path.join(config["root"], config["baselines"], f1, "output", f2)
 
     #     RANDOM
@@ -104,7 +104,7 @@ for b_t_sel in range(len(val_idx_list)-1):
         _ecef0 = _data['guess']
         ref_local = coord.LocalCoord.from_ecef(_ecef0[:3])
         ls_rand[times[t_idx]] = _ecef0[:3]
-        x = _data['features'].float().cuda()
+        x = _data['features'].float()#.cuda()
         y = _data['true_correction']
         _y = net(x.unsqueeze(1)).cpu().detach().numpy()
         _ecef_net_rand = ref_local.ned2ecef(_y[0, :])[:, 0]

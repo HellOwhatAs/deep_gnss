@@ -30,7 +30,7 @@ from tqdm import tqdm
 from correction_network.networks import Net_Snapshot
 
 weight_dict = {
-    '15': "sim_transformer_15m_bias2021-09-15_14-45-40",
+    '15': "name12025-07-03_17-13-21",
     '30': "sim_transformer_30m_bias2021-09-15_14-53-18",
 }
 
@@ -48,7 +48,7 @@ dataset = Sim_GNSS_Dataset(config)
 
 net = Net_Snapshot(dataset[0]['features'].size()[1], 1, len(dataset[0]['true_correction']))
 net.load_state_dict(torch.load(os.path.join(data_directory, 'weights', weight_dict[str(key_wt)])))
-net.cuda()
+# net.cuda()
 
 # Create empty dicts and lists
 ls_rand = {}
@@ -91,7 +91,7 @@ for b_t_sel in range(len(val_idx_list)-1):
         _ecef0 = _data['guess']
         ref_local = coord.LocalCoord.from_ecef(_ecef0[:3])
         ls_rand[times[t_idx]] = _ecef0[:3]
-        x = _data['features'].float().cuda()
+        x = _data['features'].float()#.cuda()
         y = _data['true_correction']
         _y = net(x.unsqueeze(1)).cpu().detach().numpy()
         _ecef_net_rand = ref_local.ned2ecef(_y[0, :])[:, 0]

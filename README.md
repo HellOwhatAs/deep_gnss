@@ -4,6 +4,36 @@ Code repository accompanying our work on 'Improving GNSS Positioning using Neura
 <!--- Badge for slides link---><a href="https://stanford.box.com/s/dj2eg3v886u408s234p92r52nok8twst"><img src="https://img.shields.io/badge/ION%20GNSS%2B%202021-slides-informational"/></a>
 <!--- Badge for video link---><a href="https://youtu.be/_ZeEkEPwtAw"><img src="https://img.shields.io/badge/ION%20GNSS%2B%202021-video-red"/></a>
 
+# Quick Start without conda
+1. Install [uv](https://docs.astral.sh/uv/getting-started/installation/).
+2. makedir at `./data/weights`.
+3. train:
+   ```
+   cd ./py_scripts/
+   uv run ./train_android.py prefix="name1"
+   uv run data_gen.py
+   uv run ./train_simulated.py prefix="name1"
+   ```
+4. modify `weight_dict` in `py_scripts/eval_android.py` and `py_scripts/eval_sim.py`.
+5. eval:
+   ```
+   uv run ./eval_android.py prefix="name1"
+   uv run ./eval_sim.py prefix="name1"
+   ```
+
+Output:
+```
+# output of eval_android.py
+Mean positioning error along NED in initial positions (m):  [7.50795705 7.13252414 6.32911529]
+Mean positioning error along NED in DNN corrected positions (m):  [7.9761679  5.46349773 4.3941382 ]
+Mean positioning error along NED in WLS positions (m):  [3.65562248 6.62266637 6.26710032]
+
+# output of eval_sim.py
+Mean positioning error along NED in initial positions (m):  [8.62754131 7.46685771 6.57177578]
+Mean positioning error std along NED in initial positions (m):  [5.04369719 4.80413257 4.67443961]
+Mean positioning error along NED in DNN corrected positions (m):  [8.46316104 7.41729854 4.62328957]
+Mean positioning error std along NED in DNN corrected positions (m):  [4.77658059 4.46215171 3.65251391]
+```
 ## Installation Instructions
 This code was developed in a `conda` environment running on CentOS 7.9.2009 in Sherlock, Stanford University's HPC. 
 

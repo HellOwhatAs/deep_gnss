@@ -3,7 +3,8 @@
 # Date:         21 September 2021
 # Desc:         Simulate GNSS measurements for previously saved trajectories
 ########################################################################
-import sys, os, csv
+import sys
+import os
 parent_directory = os.path.split(os.getcwd())[0]
 src_directory = os.path.join(parent_directory, 'src')
 data_directory = os.path.join(parent_directory, 'data')

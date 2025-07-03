@@ -9,7 +9,6 @@ import shutil
 import os
 from datetime import datetime, timedelta, timezone
 import georinex
-import xarray
 import unlzw3
 import pandas as pd
 import numpy as np

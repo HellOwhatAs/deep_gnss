@@ -1,0 +1,42 @@
+[project]
+name = "deep-gnss"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.9"
+dependencies = [
+    "georinex>=1.16.2",
+    "hydra-core==1.0.6",
+    "numpy==1.20.2",
+    "omegaconf==2.0.6",
+    "pandas<2",
+    "pynmea2==1.18.0",
+    "pytz==2021.1",
+    "scikit-learn>=1.6.1",
+    "scipy>=1.10.1",
+    "seaborn>=0.13.2",
+    "tensorboard>=2.19.0",
+    "torch>=2.7.1",
+    "tqdm>=4.67.1",
+    "unlzw3==0.2.1",
+]
+
+# [tool.uv.sources]
+# torch = [
+#     { index = "pytorch-cu124", marker = "sys_platform == 'win32'" },
+#     { index = "pytorch-cpu", marker = "sys_platform == 'linux' and platform_machine == 'aarch64'" },
+# ]
+# torchvision = [
+#     { index = "pytorch-cu124", marker = "sys_platform == 'win32'" },
+#     { index = "pytorch-cpu", marker = "sys_platform == 'linux' and platform_machine == 'aarch64'" },
+# ]
+
+# [[tool.uv.index]]
+# name = "pytorch-cu124"
+# url = "https://download.pytorch.org/whl/cu124"
+# explicit = true
+
+# [[tool.uv.index]]
+# name = "pytorch-cpu"
+# url = "https://download.pytorch.org/whl/cpu"
+# explicit = true

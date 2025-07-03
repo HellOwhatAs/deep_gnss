@@ -17,3 +17,11 @@ docs/ION*
 notebooks/.ipynb_checkpoints/*
 *.out
 .python-version
+/data/android_train_processed/
+/data/runs/
+/data/weights/
+/data/simulated_nonoise
+/data/matlab_simulated
+/data/matlab_simulated_nonoise
+/data/android_val_processed
+/py_scripts/outputs

@@ -59,7 +59,7 @@ class Sim_GNSS_Dataset_Snap(Dataset):
         seed_values = {}
         for file_path in os.listdir(os.path.join(self.root, data_dir)):
             tmp_name = os.path.split(file_path)[1].split(".")[0]
-            traj_id, seed_id = tmp_name.split("_")
+            traj_id, seed_id = tmp_name.split("_")[-2:]
             traj_id = int(traj_id)
             if traj_id not in file_paths.keys():
                 file_paths[traj_id] = []

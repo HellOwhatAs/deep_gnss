@@ -64,9 +64,9 @@ def test_eval(val_loader, net, loss_func):
             sample_batched = next(generator)
         _sample_batched, pad_mask = sample_batched
     #         feat_pack = torch.nn.utils.rnn.pack_padded_sequence(_sample_batched['features'], x_lengths)
-        x = _sample_batched['features'].float().cuda()
-        y = _sample_batched['true_correction'].float().cuda()
-        pad_mask = pad_mask.cuda()
+        x = _sample_batched['features'].float()#.cuda()
+        y = _sample_batched['true_correction'].float()#.cuda()
+        # pad_mask = pad_mask.cuda()
         pred_correction = net(x, pad_mask=pad_mask)
         loss = loss_func(pred_correction, y)
         loss_val += loss
@@ -113,7 +113,7 @@ def main(config: DictConfig) -> None:
         net.load_state_dict(torch.load(os.path.join(data_directory, 'weights', config.resume)))
         print("Resumed: ", config.resume)
     
-    net.cuda()
+    # net.cuda()
 
     optimizer = torch.optim.Adam(net.parameters(), config.learning_rate)
     loss_func = torch.nn.MSELoss()
@@ -130,9 +130,9 @@ def main(config: DictConfig) -> None:
         for i, sample_batched in enumerate(dataloader):
             _sample_batched, pad_mask = sample_batched
             
-            x = _sample_batched['features'].float().cuda()
-            y = _sample_batched['true_correction'].float().cuda()
-            pad_mask = pad_mask.cuda()
+            x = _sample_batched['features'].float()#.cuda()
+            y = _sample_batched['true_correction'].float()#.cuda()
+            # pad_mask = pad_mask.cuda()
             pred_correction = net(x, pad_mask=pad_mask)
             loss = loss_func(pred_correction, y)
             if config.writer:
